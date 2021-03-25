@@ -41,7 +41,7 @@ export default class CubeNavigationVertical extends React.Component {
         this._animatedValue.setOffset({ x: this._value.x, y: this._value.y });
       },
       onPanResponderMove: (e, gestureState) => {
-        Animated.event([null, { dy: this._animatedValue.y }])(e, gestureState);
+        Animated.event([null, { dy: this._animatedValue.y }], { useNativeDriver: false })(e, gestureState);
 
         // Avoid last movement
         this.lockLast =
@@ -63,7 +63,8 @@ export default class CubeNavigationVertical extends React.Component {
         Animated.spring(this._animatedValue, {
           toValue: { x: 0, y: goTo },
           friction: 3,
-          tension: 0.6
+          tension: 0.6,
+          useNativeDriver: false,
         }).start();
         setTimeout(() => {
           if (this.props.callBackAfterSwipe)
@@ -91,7 +92,8 @@ export default class CubeNavigationVertical extends React.Component {
       Animated.spring(this._animatedValue, {
         toValue: { x: 0, y: this.pages[page] },
         friction: 4,
-        tension: 0.8
+        tension: 0.8,
+        useNativeDriver: false,
       }).start();
     } else {
       this._animatedValue.setValue({ x: 0, y: this.pages[page] });
